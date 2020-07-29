@@ -123,7 +123,7 @@ export default function Home() {
                   Next step
                 </button>
               ) : (
-                <button onClick={() => setStep(1)} className="add_positivity">
+                <button onClick={() => setStep(2)} className="add_positivity">
                   Next step
                 </button>
               )}
