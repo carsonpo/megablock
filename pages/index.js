@@ -76,8 +76,8 @@ export default function Home() {
 
       localStorage.setItem("session", JSON.stringify(sess));
       setSession(sess);
-      window.location.href = "/";
       setStep(1);
+      window.history.replaceState(null, null, window.location.pathname);
     } else if (localStorage.getItem("session")) {
       setSession(JSON.parse(localStorage.getItem("session")));
     }
