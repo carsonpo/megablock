@@ -5,6 +5,7 @@ import { useState } from "react";
 
 export default function Home() {
   const [step, setStep] = useState(0);
+  const [s, ss] = useState(0);
   const [session, loading] = useSession();
   function renderContent() {
     switch (step) {
