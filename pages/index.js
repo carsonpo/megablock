@@ -58,6 +58,7 @@ export default function Home() {
 
       localStorage.setItem("session", JSON.stringify(sess));
       setSession(sess);
+      setStep(1);
       window.location.href = "/";
     } else if (localStorage.getItem("session")) {
       setSession(JSON.parse(localStorage.getItem("session")));
@@ -177,6 +178,7 @@ export default function Home() {
           <div className="login_twitter landing">
             <h1>MegaBlock Successful</h1>
             <p>We 🅱️locked that user and everyone who liked the post!</p>
+            <img className="gif" src="https://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif" alt="MegaBlock Nuke" />
             <div className="progress_buttons">
               <button onClick={() => setStep(0)}>Back Home</button>
             </div>
@@ -370,6 +372,9 @@ export default function Home() {
           }
           .progress_buttons > button:focus {
             outline: none;
+          }
+          .gif {
+            border-radius: 5px;
           }
           .twitter_input {
             width: calc(100% - 5px);
