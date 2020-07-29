@@ -33,7 +33,7 @@ export default function Home() {
         post_id: getPostId(ref.current.value),
         post_url: ref.current.value,
       }),
-    }).then(() => setStep(2));
+    }).then(() => setStep(3));
   }
 
   useEffect(() => {
@@ -60,6 +60,12 @@ export default function Home() {
   function renderContent() {
     switch (step) {
       case 0:
+        return (
+          <div className="landing">
+
+          </div>
+        )
+      case 1:
         return (
           <div className="login_twitter">
             <h1>Login via Twitter</h1>
@@ -106,7 +112,7 @@ export default function Home() {
             </div>
           </div>
         );
-      case 1:
+      case 2:
         return (
           <div className="login_twitter">
             <h1>Paste the Twitter post url</h1>
@@ -117,7 +123,7 @@ export default function Home() {
               placeholder="https://twitter.com/twitter/status/1234..."
             />
             <div className="progress_buttons">
-              <button onClick={() => setStep(0)}>Go back</button>
+              <button onClick={() => setStep(1)}>Go back</button>
               {/*TODO: Make button unclickable and gray if not authenticated */}
               {!session ? (
                 <button className="add_positivity disabled_button" disabled>
@@ -132,7 +138,7 @@ export default function Home() {
           </div>
         );
 
-      case 2:
+      case 3:
         return (
           <div className="login_twitter">
             <h1>MegaBlock Successful</h1>
