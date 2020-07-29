@@ -3,7 +3,7 @@ import TweetEmbed from "react-tweet-embed";
 import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
   const [tweet, setTweet] = useState("");
   const [session, setSession] = useState(null);
 
@@ -134,10 +134,10 @@ export default function Home() {
       case 2:
         return (
           <div className="login_twitter landing">
-            <h1>Paste the Twitter post url</h1>
+            <h1>Paste the Twitter post URL</h1>
             <p>
               MegaBlock will block the author of the tweet, and anyone who liked
-              the tweet too.
+              the tweet too. Be sure you want to do this.
             </p>
             <input
               type="text"
