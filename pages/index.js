@@ -173,7 +173,7 @@ export default function Home() {
             />
             {tweet !== "" ? <TweetEmbed id={getPostId(tweet)} /> : null}
             <div className="progress_buttons custom_bottom_margin">
-              <button onClick={() => setStep(1)}>Go back</button>
+              <button onClick={() => {setStep(1); setTweet("")}}>Go back</button>
               {!session && tweet == '' ? (
                 <button className="add_positivity disabled_button" disabled>
                   Next step
