@@ -14,6 +14,7 @@
     "node-fetch": "^2.6.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-tweet-embed": "^1.2.2",
     "twitter": "^1.7.1",
     "twitter-lite": "^0.14.0"
   }

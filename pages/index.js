@@ -1,12 +1,14 @@
 import Head from "next/head";
-import styles from "../styles/Home.module.css";
+import TweetEmbed from "react-tweet-embed";
 import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
   const [step, setStep] = useState(0);
   const [s, ss] = useState(0);
+  const [tweet, setTweet] = useState('');
   const [session, setSession] = useState(null);
   const ref = useRef();
+
   function handleLogin() {
     fetch("/api/auth/getOAuthToken")
       .then((res) => res.json())
@@ -16,6 +18,7 @@ export default function Home() {
         window.location.href = `https://api.twitter.com/oauth/authenticate?oauth_token=${oauth_token}`;
       });
   }
+
   function handleSignOut() {
     localStorage.removeItem("session");
   }
@@ -30,8 +33,8 @@ export default function Home() {
       method: "POST",
       body: JSON.stringify({
         ...session,
-        post_id: getPostId(ref.current.value),
-        post_url: ref.current.value,
+        post_id: getPostId(tweet),
+        post_url: tweet,
       }),
     }).then(() => setStep(3));
   }
@@ -62,21 +65,23 @@ export default function Home() {
       case 0:
         return (
           <div className="landing">
-
+            <h1><span>MegaBlock</span> lets you <span className="cancel">nuke</span> a tweet.</h1>
+            <p>Don't like a bad tweet? Block the tweet, it's author, and every single person who liked it—in one click.</p>
+            <p>A drop by the <a href="https://genzmafia.com" target="_blank" rel="noopener noreferrer">Gen Z Mafia</a>.</p>
+            <TweetEmbed id="1288211237772226560" />
+            <button className="get_started_button" onClick={() => setStep(1)}>Get Started</button>
           </div>
-        )
+        );
+
       case 1:
         return (
-          <div className="login_twitter">
+          <div className="login_twitter landing">
             <h1>Login via Twitter</h1>
             <p>
-              First up, we need to make sure that you're not a{" "}
-              <span role="img" aria-label="Robot">
-                🤖
-              </span>
-              . Get started by signing in with Twitter—we won't ever post on
-              your behalf.
-              <br /> Or use your account in any other way than to block people
+              Get started by signing in with Twitter.
+            </p>
+            <p>
+              We won't use your account in any other way than to <span className="cancel">nuke</span> the people
               you ask us to.
             </p>
             {!session ? (
@@ -112,17 +117,23 @@ export default function Home() {
             </div>
           </div>
         );
+
       case 2:
         return (
-          <div className="login_twitter">
+          <div className="login_twitter landing">
             <h1>Paste the Twitter post url</h1>
+            <p>MegaBlock will block the author of the tweet, and anyone who liked the tweet too.</p>
             <input
               type="text"
-              ref={ref}
+              value={tweet}
+              onChange={e => setTweet(e.target.value)}
               className="twitter_input"
               placeholder="https://twitter.com/twitter/status/1234..."
             />
-            <div className="progress_buttons">
+            {tweet !== '' ? (
+              <TweetEmbed id={getPostId(tweet)} />
+            ) : null}
+            <div className="progress_buttons custom_bottom_margin">
               <button onClick={() => setStep(1)}>Go back</button>
               {/*TODO: Make button unclickable and gray if not authenticated */}
               {!session ? (
@@ -140,17 +151,19 @@ export default function Home() {
 
       case 3:
         return (
-          <div className="login_twitter">
+          <div className="login_twitter landing">
             <h1>MegaBlock Successful</h1>
             <p>We 🅱️locked that user and everyone who liked the post!</p>
             <div className="progress_buttons">
-              <button onClick={() => setStep(0)}>Go back</button>
+              <button onClick={() => setStep(0)}>Back Home</button>
               {/*TODO: Make button unclickable and gray if not authenticated */}
             </div>
           </div>
         );
+
     }
   }
+
   return (
     <div className="root">
       <Head>
@@ -159,6 +172,53 @@ export default function Home() {
       <div className="content">{renderContent()}</div>
       <style jsx global>
         {`
+          html {
+            background-color: rgb(243, 247, 249);
+          }
+          .cancel {
+            color: rgb(224, 36, 94) !important;
+          }
+          .login_twitter {
+
+          }
+          .landing > h1 {
+            color: rgb(22, 32, 44);
+            font-size: 45px;
+            margin-block-end: 0px;
+          }
+          .landing > h1 > span {
+            color: rgb(29, 161, 242);
+          }
+          .landing > p {
+            color: rgb(99, 117, 131);
+            font-weight: 500;
+            font-size: 18px;
+            max-width: 500px;
+            line-height: 26.5px;
+          }
+          .landing > p > a {
+            color: rgb(22, 32, 44);
+            text-decoration: none;
+            border-bottom: 1px solid rgb(22, 32, 44);
+            transition: 100ms ease-in-out;
+          }
+          .landing > p > a:hover {
+            opacity: 0.7;
+          }
+          .get_started_button {
+            margin-top: 10px;
+            font-size: 17px;
+            padding: 10px 25px;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            transition: 100ms ease-in-out;
+            background-color: rgb(29, 161, 242);
+            box-shadow: 0 4px 11px rgba(29,161,242,.35);
+          }
+          .get_started_button:hover {
+            background-color: rgb(20, 151, 232);
+          }
           .twitter_signin {
             background-color: #0097ed;
             border: none;
@@ -211,17 +271,21 @@ export default function Home() {
             outline: none;
           }
           .twitter_input {
-            width: 400px;
+            width: calc(100% - 5px);
             height: 36px;
             border: 1px solid #aaa;
             background-color: white;
-            border-radius: 2px;
+            border-radius: 5px;
+            padding-left: 5px;
             font-size: 20px;
+            margin-bottom: 15px;
           }
           .twitter_input:focus {
             outline: none;
           }
-
+          .custom_bottom_margin {
+            padding-bottom: 50px;
+          }
           body {
             font-family: "Inter", sans-serif;
             margin: 0px;
@@ -236,7 +300,7 @@ export default function Home() {
             min-height: 320px;
           }
           .landing {
-            margin-top: 40px;
+            padding: 0px 25px;
           }
           .head > h1,
           .head > div > h1 {
@@ -299,11 +363,14 @@ export default function Home() {
           .megablock_button:focus {
             outline: none;
           }
+          .progress_buttons {
+            margin-left: -10px !important;
+          }
           .progress_buttons > button {
             display: inline-block;
             margin: 10px;
             font-size: 17px;
-            padding: 11px 17.5px;
+            padding: 11px 20px;
             border-radius: 6px;
             border: none;
             transition: 50ms ease-in-out;
