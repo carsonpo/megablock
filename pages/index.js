@@ -1,9 +1,11 @@
 import Head from "next/head";
 import TweetEmbed from "react-tweet-embed";
 import { useState, useEffect } from "react";
+import BeatLoader from "react-spinners/BeatLoader"; // Loading animation
 
 export default function Home() {
   const [step, setStep] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [tweet, setTweet] = useState("");
   const [session, setSession] = useState(null);
 
@@ -27,6 +29,7 @@ export default function Home() {
   }
 
   function handleSubmit() {
+    setLoading(true);
     fetch("/api/block", {
       method: "POST",
       body: JSON.stringify({
@@ -34,7 +37,10 @@ export default function Home() {
         post_id: getPostId(tweet),
         post_url: tweet,
       }),
-    }).then(() => setStep(3));
+    }).then(() => {
+      setLoading(false);
+      setStep(3);
+    });
   }
 
   useEffect(() => {
@@ -52,6 +58,7 @@ export default function Home() {
 
       localStorage.setItem("session", JSON.stringify(sess));
       setSession(sess);
+      setStep(1);
       window.location.href = "/";
     } else if (localStorage.getItem("session")) {
       setSession(JSON.parse(localStorage.getItem("session")));
@@ -149,13 +156,17 @@ export default function Home() {
             {tweet !== "" ? <TweetEmbed id={getPostId(tweet)} /> : null}
             <div className="progress_buttons custom_bottom_margin">
               <button onClick={() => setStep(1)}>Go back</button>
-              {!session ? (
+              {!session && tweet == '' ? (
                 <button className="add_positivity disabled_button" disabled>
                   Next step
                 </button>
               ) : (
                 <button onClick={handleSubmit} className="megablock_button">
-                  MegaBlock!
+                  {!loading ? (
+                    <span>MegaBlock!</span>
+                  ) : (
+                    <CustomLoader />
+                  )}
                 </button>
               )}
             </div>
@@ -167,6 +178,7 @@ export default function Home() {
           <div className="login_twitter landing">
             <h1>MegaBlock Successful</h1>
             <p>We 🅱️locked that user and everyone who liked the post!</p>
+            <img className="gif" src="https://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif" alt="MegaBlock Nuke" />
             <div className="progress_buttons">
               <button onClick={() => setStep(0)}>Back Home</button>
             </div>
@@ -226,7 +238,7 @@ export default function Home() {
         <meta name="twitter:site" content="https://megablock.xyz" />
         <meta
           property="og:image"
-          content="https://megablock.xyz/metaimage.png"
+          content="https://megablock.xyz/twitterimage.png"
         />
         <meta
           name="twitter:image"
@@ -236,6 +248,19 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
           rel="stylesheet"
         ></link>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-173583190-3%22%3E" >
+        </script>
+        <script dangerouslySetInnerHTML={
+          { __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments)}
+              gtag("js", new Date());
+              gtag("config", "UA-173583190-3");
+          `}
+        }>
+        </script>
       </Head>
       <div className="content">{renderContent()}</div>
       <style jsx global>
@@ -347,6 +372,9 @@ export default function Home() {
           }
           .progress_buttons > button:focus {
             outline: none;
+          }
+          .gif {
+            border-radius: 5px;
           }
           .twitter_input {
             width: calc(100% - 5px);
@@ -630,4 +658,13 @@ export default function Home() {
       </style>
     </div>
   );
+}
+
+// Loading animation
+function CustomLoader() {
+  return <BeatLoader
+    size={6}
+    color={"#fff"}
+    loading={true}
+  />
 }
