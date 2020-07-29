@@ -447,7 +447,7 @@ export default function Home() {
             box-shadow: 0 4px 11px rgba(29, 161, 242, 0.35);
           }
           .add_positivity:hover {
-            background-color: rgb(104, 117, 245);
+            background-color: rgb(20, 151, 232);
           }
           .add_positivity:focus {
             outline: none;
