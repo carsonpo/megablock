@@ -333,6 +333,7 @@ export default function Home() {
             display: block;
             border-top-left-radius: 6px;
             border-top-right-radius: 6px;
+            border-bottom: 1px solid #e7eaf3;
           }
           .modal__content {
             padding: 0px 10px;
