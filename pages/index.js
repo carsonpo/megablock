@@ -2,11 +2,14 @@ import Head from "next/head";
 import TweetEmbed from "react-tweet-embed";
 import { useState, useEffect } from "react";
 import BeatLoader from "react-spinners/BeatLoader"; // Loading animation
+import { Modal } from 'react-responsive-modal';
 
 export default function Home() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [modal, setModal] = useState(false);
   const [tweet, setTweet] = useState("");
+  const [confirmation, setConfirmation] = useState("");
   const [session, setSession] = useState(null);
 
   function handleLogin() {
@@ -17,6 +20,19 @@ export default function Home() {
 
         window.location.href = `https://api.twitter.com/oauth/authenticate?oauth_token=${oauth_token}`;
       });
+  }
+
+  function openModal() {
+    if (!modal) {
+      setModal(true);
+    }
+  }
+
+  function closeModal() {
+    if (modal) {
+      setModal(false);
+      setConfirmation("");
+    }
   }
 
   function handleSignOut() {
@@ -40,6 +56,7 @@ export default function Home() {
       }),
     }).then(() => {
       setLoading(false);
+      closeModal();
       setStep(3);
     });
   }
@@ -162,12 +179,8 @@ export default function Home() {
                   Next step
                 </button>
               ) : (
-                <button onClick={handleSubmit} className="megablock_button">
-                  {!loading ? (
-                    <span>MegaBlock!</span>
-                  ) : (
-                    <CustomLoader />
-                  )}
+                <button onClick={openModal} className="megablock_button">
+                  MegaBlock!
                 </button>
               )}
             </div>
@@ -263,6 +276,29 @@ export default function Home() {
         }>
         </script>
       </Head>
+      <Modal open={modal} onClose={closeModal} center>
+        <div className="modal__header">
+          <h3>Are you sure you want to nuke this tweet?</h3>
+        </div>
+        <div className="modal__content">
+          <p>You will block the author, all people that liked this tweet, and unfollow all of these individuals.</p>
+          <input value={confirmation} onChange={e => setConfirmation(e.target.value)} placeholder="Type: I confirm I want to nuke" />
+          <div>
+            <button onClick={closeModal}>Cancel</button>
+            {confirmation.toLowerCase() == 'i confirm i want to nuke' ? (
+              <button onClick={handleSubmit} className="megablock_button">
+                {!loading ? (
+                  <span>MegaBlock!</span>
+                ) : (
+                  <CustomLoader />
+                )}
+              </button>
+            ) : (
+              <button>Enter input</button>
+            )}
+          </div>
+        </div>
+      </Modal>
       <div className="content">{renderContent()}</div>
       <style jsx global>
         {`
@@ -281,6 +317,63 @@ export default function Home() {
 
             padding: 0 5px;
             border-radius: 15px;
+          }
+          .react-responsive-modal-overlay {
+            background: rgba(0, 0, 0, 0.35);
+          }
+          .react-responsive-modal-modal {
+            padding: 0px !important;
+            border-radius: 5px;
+          }
+          .modal__header {
+            padding: 15px;
+            text-align: center;
+            background-color: rgb(243, 247, 249);
+            width: calc(100% - 30px);
+            display: block;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+          }
+          .modal__content {
+            padding: 0px 10px;
+            text-align: center;
+          }
+          .modal__content > p {
+            max-width: 500px;
+            line-height: 25px;
+          }
+          .modal__content > p:nth-child(2) {
+            margin-block-end: 10px;
+          }
+          .modal__content > input {
+            width: calc(100% - 20px);
+            height: 36px;
+            border: 1px solid #aaa;
+            background-color: white;
+            border-radius: 5px;
+            padding-left: 5px;
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #c00;
+          }
+          .modal__content > div {
+            display: inline-block;
+            padding-bottom: 10px;
+          }
+          .modal__content > div > button {
+            display: inline-block;
+            margin: 10px;
+            font-size: 17px;
+            padding: 11px 25px;
+            border-radius: 6px;
+            border: none;
+            transition: 50ms ease-in-out;
+          }
+          .modal__content > div > button:nth-child(1):hover {
+            opacity: 0.7;
+          }
+          .modal__content > div > button:focus {
+            outline: none;
           }
           .cancel {
             color: rgb(224, 36, 94);
