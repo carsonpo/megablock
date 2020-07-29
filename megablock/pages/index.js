@@ -69,8 +69,9 @@ export default function Home() {
                 🤖
               </span>
               . Get started by signing in with Twitter—we won't ever post on
-              your behalf. Or use your account in any other way than to block
-              people you ask us to.
+              your behalf.
+              <br /> Or use your account in any other way than to block people
+              you ask us to.
             </p>
             {!session ? (
               // Manual redirection
