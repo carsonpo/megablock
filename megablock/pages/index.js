@@ -107,7 +107,7 @@ export default function Home() {
       case 1:
         return (
           <div className="login_twitter">
-            <h1>Paste the twitter post url</h1>
+            <h1>Paste the Twitter post url</h1>
             <input
               type="text"
               ref={ref}
