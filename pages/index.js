@@ -432,7 +432,7 @@ export default function Home() {
             color: #fff;
             font-weight: 500;
             transition: 100ms ease-in-out;
-            box-shadow: 0 4px 11px rgba(104, 117, 245, 0.35);
+            box-shadow: 0 4px 11px rgba(204, 0, 0, 0.35);
             background-color: #c00;
           }
           .megablock_button:hover {
