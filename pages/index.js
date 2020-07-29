@@ -3,7 +3,7 @@ import TweetEmbed from "react-tweet-embed";
 import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(0);
   const [tweet, setTweet] = useState("");
   const [session, setSession] = useState(null);
 
