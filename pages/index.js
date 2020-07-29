@@ -4,10 +4,8 @@ import { useState, useRef, useEffect } from "react";
 
 export default function Home() {
   const [step, setStep] = useState(0);
-  const [s, ss] = useState(0);
-  const [tweet, setTweet] = useState('');
+  const [tweet, setTweet] = useState("");
   const [session, setSession] = useState(null);
-  const ref = useRef();
 
   function handleLogin() {
     fetch("/api/auth/getOAuthToken")
@@ -65,11 +63,29 @@ export default function Home() {
       case 0:
         return (
           <div className="landing">
-            <h1><span>MegaBlock</span> lets you <span className="cancel">nuke</span> a tweet.</h1>
-            <p>Don't like a bad tweet? Block the tweet, it's author, and every single person who liked it—in one click.</p>
-            <p>A drop by the <a href="https://genzmafia.com" target="_blank" rel="noopener noreferrer">Gen Z Mafia</a>.</p>
+            <h1>
+              <span>MegaBlock</span> lets you{" "}
+              <span className="dangerzone">nuke</span> a tweet.
+            </h1>
+            <p>
+              Don't like a bad tweet? Block the tweet, it's author, and every
+              single person who liked it—in one click.
+            </p>
+            <p>
+              A drop by the{" "}
+              <a
+                href="https://genzmafia.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Gen Z Mafia
+              </a>
+              .
+            </p>
             <TweetEmbed id="1288211237772226560" />
-            <button className="get_started_button" onClick={() => setStep(1)}>Get Started</button>
+            <button className="get_started_button" onClick={() => setStep(1)}>
+              Get Started
+            </button>
           </div>
         );
 
@@ -77,12 +93,10 @@ export default function Home() {
         return (
           <div className="login_twitter landing">
             <h1>Login via Twitter</h1>
+            <p>Get started by signing in with Twitter.</p>
             <p>
-              Get started by signing in with Twitter.
-            </p>
-            <p>
-              We won't use your account in any other way than to <span className="cancel">nuke</span> the people
-              you ask us to.
+              We won't use your account in any other way than to{" "}
+              <span className="cancel">nuke</span> the people you ask us to.
             </p>
             {!session ? (
               // Manual redirection
@@ -122,17 +136,18 @@ export default function Home() {
         return (
           <div className="login_twitter landing">
             <h1>Paste the Twitter post url</h1>
-            <p>MegaBlock will block the author of the tweet, and anyone who liked the tweet too.</p>
+            <p>
+              MegaBlock will block the author of the tweet, and anyone who liked
+              the tweet too.
+            </p>
             <input
               type="text"
               value={tweet}
-              onChange={e => setTweet(e.target.value)}
+              onChange={(e) => setTweet(e.target.value)}
               className="twitter_input"
               placeholder="https://twitter.com/twitter/status/1234..."
             />
-            {tweet !== '' ? (
-              <TweetEmbed id={getPostId(tweet)} />
-            ) : null}
+            {tweet !== "" ? <TweetEmbed id={getPostId(tweet)} /> : null}
             <div className="progress_buttons custom_bottom_margin">
               <button onClick={() => setStep(1)}>Go back</button>
               {/*TODO: Make button unclickable and gray if not authenticated */}
@@ -160,7 +175,6 @@ export default function Home() {
             </div>
           </div>
         );
-
     }
   }
 
@@ -175,11 +189,23 @@ export default function Home() {
           html {
             background-color: rgb(243, 247, 249);
           }
+          .dangerzone {
+            color: rgb(243, 247, 249) !important;
+            background: repeating-linear-gradient(
+              45deg,
+              red,
+              red 10px,
+              #333333 10px,
+              #333333 20px
+            );
+
+            padding: 0 5px;
+            border-radius: 15px;
+          }
           .cancel {
-            color: rgb(224, 36, 94) !important;
+            color: rgb(224, 36, 94);
           }
           .login_twitter {
-
           }
           .landing > h1 {
             color: rgb(22, 32, 44);
@@ -214,7 +240,7 @@ export default function Home() {
             border-radius: 6px;
             transition: 100ms ease-in-out;
             background-color: rgb(29, 161, 242);
-            box-shadow: 0 4px 11px rgba(29,161,242,.35);
+            box-shadow: 0 4px 11px rgba(29, 161, 242, 0.35);
           }
           .get_started_button:hover {
             background-color: rgb(20, 151, 232);
