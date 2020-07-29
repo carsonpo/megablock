@@ -25,7 +25,7 @@ export default function Home() {
               <button
                 onClick={() =>
                   signin("twitter", {
-                    callbackUrl: "https://vibes.fyi/?callback=true",
+                    callbackUrl: "https://megablock.vercel.app/?callback=true",
                   })
                 }
                 className="twitter_signin"
@@ -40,7 +40,7 @@ export default function Home() {
                   <span>{session.user.name}</span>
                   <button
                     onClick={() =>
-                      signout({ callbackUrl: "https://vibes.fyi" })
+                      signout({ callbackUrl: "https://megablock.vercel.app" })
                     }
                   >
                     Sign out

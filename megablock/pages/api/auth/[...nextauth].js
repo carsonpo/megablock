@@ -2,7 +2,7 @@ import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 
 const options = {
-  site: process.env.SITE,
+  site: process.env.SITE || "http://localhost:3000",
 
   providers: [
     Providers.Twitter({
