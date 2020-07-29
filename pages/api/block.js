@@ -45,18 +45,6 @@ export default (req, res) =>
       }
     });
 
-    const ourAccount = new Twitter({
-      consumer_key: process.env.TWITTER_CLIENT_ID,
-      consumer_secret: process.env.TWITTER_CLIENT_SECRET,
-      access_token_key: process.env.OUR_TWITTER_ACCESS_TOKEN,
-      access_token_secret: process.env.OUR_TWITTER_ACCESS_TOKEN_SECRET,
-    });
-
-    ourAccount.post("statuses/update", {
-      status: `This tweet just got Mega🅱️locked! ☢️🚨 ${post_url}`,
-      auto_populate_reply_metadata: true,
-    });
-
     const tokens = post_url.split("/");
 
     const originalPoster = tokens[tokens.indexOf("status") - 1];
