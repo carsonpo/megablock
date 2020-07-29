@@ -21,6 +21,7 @@ export default function Home() {
 
   function handleSignOut() {
     localStorage.removeItem("session");
+    window.location.reload();
   }
 
   function getPostId(url) {
@@ -442,8 +443,8 @@ export default function Home() {
             color: #fff;
             font-weight: 500;
             transition: 100ms ease-in-out;
-            box-shadow: 0 4px 11px rgba(104, 117, 245, 0.35);
-            background-color: rgb(88, 80, 236);
+            background-color: rgb(29, 161, 242);
+            box-shadow: 0 4px 11px rgba(29, 161, 242, 0.35);
           }
           .add_positivity:hover {
             background-color: rgb(104, 117, 245);
@@ -610,7 +611,7 @@ export default function Home() {
           }
           .profile > div > button {
             font-size: 13px;
-            color: rgb(88, 80, 236);
+            color: rgb(29, 161, 242);
             transition: 50ms ease-in-out;
             border: none;
             padding: 0px;
