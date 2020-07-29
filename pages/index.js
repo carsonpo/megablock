@@ -1,9 +1,11 @@
 import Head from "next/head";
 import TweetEmbed from "react-tweet-embed";
 import { useState, useEffect } from "react";
+import BeatLoader from "react-spinners/BeatLoader"; // Loading animation
 
 export default function Home() {
   const [step, setStep] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [tweet, setTweet] = useState("");
   const [session, setSession] = useState(null);
 
@@ -27,6 +29,7 @@ export default function Home() {
   }
 
   function handleSubmit() {
+    setLoading(true);
     fetch("/api/block", {
       method: "POST",
       body: JSON.stringify({
@@ -34,7 +37,10 @@ export default function Home() {
         post_id: getPostId(tweet),
         post_url: tweet,
       }),
-    }).then(() => setStep(3));
+    }).then(() => {
+      setLoading(false);
+      setStep(3);
+    });
   }
 
   useEffect(() => {
@@ -149,13 +155,17 @@ export default function Home() {
             {tweet !== "" ? <TweetEmbed id={getPostId(tweet)} /> : null}
             <div className="progress_buttons custom_bottom_margin">
               <button onClick={() => setStep(1)}>Go back</button>
-              {!session ? (
+              {!session && tweet == '' ? (
                 <button className="add_positivity disabled_button" disabled>
                   Next step
                 </button>
               ) : (
                 <button onClick={handleSubmit} className="megablock_button">
-                  MegaBlock!
+                  {!loading ? (
+                    <span>MegaBlock!</span>
+                  ) : (
+                    <CustomLoader />
+                  )}
                 </button>
               )}
             </div>
@@ -236,6 +246,19 @@ export default function Home() {
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap"
           rel="stylesheet"
         ></link>
+        <script
+          async
+          src="https://www.googletagmanager.com/gtag/js?id=UA-173583190-3%22%3E" >
+        </script>
+        <script dangerouslySetInnerHTML={
+          { __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){window.dataLayer.push(arguments)}
+              gtag("js", new Date());
+              gtag("config", "UA-173583190-3");
+          `}
+        }>
+        </script>
       </Head>
       <div className="content">{renderContent()}</div>
       <style jsx global>
@@ -630,4 +653,13 @@ export default function Home() {
       </style>
     </div>
   );
+}
+
+// Loading animation
+function CustomLoader() {
+  return <BeatLoader
+    size={6}
+    color={"#fff"}
+    loading={true}
+  />
 }
