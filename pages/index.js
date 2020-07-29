@@ -66,7 +66,7 @@ export default function Home() {
         return (
           <div className="landing">
             <h1><span>MegaBlock</span> lets you <span className="cancel">nuke</span> a tweet.</h1>
-            <p>Don't like a bad tweet? Block the tweet, it's author, and every single person who liked it—in one click.</p>
+            <p>Don't like a bad tweet? Block the tweet, its author, and every single person who liked it—in one click.</p>
             <p>A drop by the <a href="https://genzmafia.com" target="_blank" rel="noopener noreferrer">Gen Z Mafia</a>.</p>
             <TweetEmbed id="1288211237772226560" />
             <button className="get_started_button" onClick={() => setStep(1)}>Get Started</button>
@@ -104,7 +104,6 @@ export default function Home() {
             )}
             <div className="progress_buttons">
               <button onClick={() => setStep(0)}>Go back</button>
-              {/*TODO: Make button unclickable and gray if not authenticated */}
               {!session ? (
                 <button className="add_positivity disabled_button" disabled>
                   Next step
@@ -135,7 +134,6 @@ export default function Home() {
             ) : null}
             <div className="progress_buttons custom_bottom_margin">
               <button onClick={() => setStep(1)}>Go back</button>
-              {/*TODO: Make button unclickable and gray if not authenticated */}
               {!session ? (
                 <button className="add_positivity disabled_button" disabled>
                   Next step
@@ -156,7 +154,6 @@ export default function Home() {
             <p>We 🅱️locked that user and everyone who liked the post!</p>
             <div className="progress_buttons">
               <button onClick={() => setStep(0)}>Back Home</button>
-              {/*TODO: Make button unclickable and gray if not authenticated */}
             </div>
           </div>
         );
@@ -167,7 +164,24 @@ export default function Home() {
   return (
     <div className="root">
       <Head>
-        <title>MegaBlock</title>
+        <title>MegaBlock | Nuke tweets in one click</title>
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+        <link rel="manifest" href="/favicon/site.webmanifest" />
+        <meta name="description" content="Don't like a bad tweet? Block the tweet, its author, and every single person who liked it—in one click." />
+        <meta property="og:type" content="website" />
+        <meta name="og:title" property="og:title" content="MegaBlock | Nuke tweets in one click" />
+        <meta name="og:description" property="og:description" content="Don't like a bad tweet? Block the tweet, its author, and every single person who liked it—in one click." />
+        <meta property="og:site_name" content="MegaBlock.XYZ" />
+        <meta property="og:url" content="https://megablock.xyz" />  
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="MegaBlock | Nuke tweets in one click" />
+        <meta name="twitter:description" content="Don't like a bad tweet? Block the tweet, its author, and every single person who liked it—in one click." />
+        <meta name="twitter:site" content="https://megablock.xyz" />
+        <meta property="og:image" content="https://megablock.xyz/metaimage.png" />
+        <meta name="twitter:image" content="https://megablock.xyz/twitterimage.png" />
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet"></link>
       </Head>
       <div className="content">{renderContent()}</div>
       <style jsx global>
@@ -177,9 +191,6 @@ export default function Home() {
           }
           .cancel {
             color: rgb(224, 36, 94) !important;
-          }
-          .login_twitter {
-
           }
           .landing > h1 {
             color: rgb(22, 32, 44);
