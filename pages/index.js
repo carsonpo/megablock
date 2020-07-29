@@ -226,7 +226,7 @@ export default function Home() {
         <meta name="twitter:site" content="https://megablock.xyz" />
         <meta
           property="og:image"
-          content="https://megablock.xyz/metaimage.png"
+          content="https://megablock.xyz/twitterimage.png"
         />
         <meta
           name="twitter:image"
