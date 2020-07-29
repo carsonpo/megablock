@@ -1,6 +1,6 @@
 import Head from "next/head";
 import TweetEmbed from "react-tweet-embed";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [step, setStep] = useState(0);
@@ -123,7 +123,7 @@ export default function Home() {
                   Next step
                 </button>
               ) : (
-                <button onClick={() => setStep(1)} className="add_positivity">
+                <button onClick={() => setStep(2)} className="add_positivity">
                   Next step
                 </button>
               )}
@@ -432,7 +432,7 @@ export default function Home() {
             color: #fff;
             font-weight: 500;
             transition: 100ms ease-in-out;
-            box-shadow: 0 4px 11px rgba(104, 117, 245, 0.35);
+            box-shadow: 0 4px 11px rgba(204, 0, 0, 0.35);
             background-color: #c00;
           }
           .megablock_button:hover {

@@ -4,6 +4,7 @@
 # dotenv environment variables file (build for Zeit Now)
 .env
 .env.build
+.env.local
 
 # Dependency directories
 node_modules/
@@ -15,3 +16,5 @@ yarn-error.log*
 
 # .vscode settings
 .vscode
+
+yarn.lock
