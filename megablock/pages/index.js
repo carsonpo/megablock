@@ -80,7 +80,7 @@ export default function Home() {
             ) : (
               <div className="profile">
                 <img
-                  src={`http://twivatar.glitch.me/@${session.screen_name}`}
+                  src={`https://twivatar.glitch.me/@${session.screen_name}`}
                   alt="Profile picture"
                 />
                 <div>
