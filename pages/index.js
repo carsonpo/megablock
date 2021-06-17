@@ -107,6 +107,11 @@ export default function Home() {
               </a>
               .
             </p>
+            <small>
+              <a href={"https://tryforefront.com"}>
+                The best way to deploy machine learning models
+              </a>
+            </small>
             <TweetEmbed id="1288211237772226560" />
             <button className="get_started_button" onClick={() => setStep(1)}>
               Get Started
@@ -271,7 +276,7 @@ export default function Home() {
               window.dataLayer = window.dataLayer || [];
               function gtag(){window.dataLayer.push(arguments)}
               gtag("js", new Date());
-              gtag("config", "UA-173583190-3");
+              gtag("config", "G-8PEFF3YBHP");
           `}
         }>
         </script>
@@ -394,6 +399,27 @@ export default function Home() {
             max-width: 500px;
             line-height: 26.5px;
           }
+          .landing > small{
+          
+            color: rgb(99, 117, 131);
+            font-weight: 500;
+            font-size: 14px;
+            max-width: 500px;
+            line-height: 26.5px;
+          
+          }
+          .landing > small > a {
+            color: inherit;
+            text-decoration: none;
+            
+            transition: 100ms ease-in-out;
+          }
+          
+          .landing > small > a:hover{
+            
+            border-bottom: 1px solid rgb(99, 117, 131);
+            
+            }
           .landing > p > a {
             color: rgb(22, 32, 44);
             text-decoration: none;
