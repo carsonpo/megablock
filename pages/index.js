@@ -108,7 +108,7 @@ export default function Home() {
               .
             </p>
             <small>
-              <a href={"https://tryforefront.com"}>
+              <a href={"https://helloforefront.com"}>
                 The best way to deploy machine learning models
               </a>
             </small>
