@@ -10,11 +10,12 @@ export default (req, res) =>
   new Promise(async (resolve) => {
     const { body } = req;
     const b = JSON.parse(req.body);
-    const { access_token, access_token_secret, post_id, post_url } = b;
+    const { access_token, access_token_secret, list_id, list_url } = b;
 
-    if (!req.body || !access_token || !access_token_secret || !post_id) {
+    if (!req.body || !access_token || !access_token_secret || !list_id) {
       resolve(res.status(400).end());
     }
+
 
     const client = new Twitter({
       consumer_key: process.env.TWITTER_CLIENT_ID,
@@ -23,31 +24,37 @@ export default (req, res) =>
       access_token_secret,
     });
 
-    const response = await nodeFetch(
-      `https://twitter.com/i/activity/favorited_popup?id=${post_id}`,
-      {
-        headers: {
-          "User-Agent":
-            "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-        },
-      }
-    );
-    const text = await response.json();
+    console.log(list_id)
 
-    const $ = cheerio.load(text["htmlUsers"]);
+    const response = await client.get("lists/subscribers", {
+      list_id: list_id,
+      count:5000
+    }).catch((err) => console.error(err));
+
+    console.log(response)
     let screenNames = [];
 
-    $("div[data-user-id]").each(function (i, el) {
-      const name = $(el).attr("data-screen-name");
+    const {users} = response;
+
+    users.forEach(function (u) {
+      const name = u.screen_name;
 
       if (name) {
         screenNames.push(name);
       }
     });
 
-    const tokens = post_url.split("/");
+    console.log(screenNames);
 
-    const originalPoster = tokens[tokens.indexOf("status") - 1];
+    const owner_response = await client.get("lists/show", {
+      list_id: list_id
+    }).catch((err) => console.error(err));
+
+    console.log(owner_response);
+
+    const {user} = owner_response;
+    const originalPoster = user.screen_name;
+
 
     await client
       .post("blocks/create", {

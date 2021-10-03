@@ -3,14 +3,18 @@ import TweetEmbed from "react-tweet-embed";
 import { useState, useEffect } from "react";
 import BeatLoader from "react-spinners/BeatLoader"; // Loading animation
 import { Modal } from 'react-responsive-modal';
+import cheerio from "cheerio";
 
 export default function Home() {
   const [step, setStep] = useState(0);
   const [loading, setLoading] = useState(false);
   const [modal, setModal] = useState(false);
-  const [tweet, setTweet] = useState("");
+  const [list, setList] = useState("");
   const [confirmation, setConfirmation] = useState("");
   const [session, setSession] = useState(null);
+  const [description, setDescription] = useState(null);
+  const [name, setName] = useState(null);
+  const [subscribers, setSubscribers] = useState(null);
 
   function handleLogin() {
     fetch("/api/auth/getOAuthToken")
@@ -40,9 +44,28 @@ export default function Home() {
     window.location.reload();
   }
 
-  function getPostId(url) {
+  function getListId(url) {
     const tokens = url.split("/");
     return tokens[tokens.length - 1];
+  }
+
+  function getListInfo(url) {
+    setList(url);
+    fetch("/api/list", {
+      method: "POST",
+      body: JSON.stringify({
+        ...session,
+        list_id: getListId(url),
+        list_url: url,
+      })
+    }).then((res)=> res.json())
+     .then((json)=> {
+       const {name} = json;
+       setName(name)
+     }).then(()=>{
+        setLoading(false);
+      });
+
   }
 
   function handleSubmit() {
@@ -51,8 +74,8 @@ export default function Home() {
       method: "POST",
       body: JSON.stringify({
         ...session,
-        post_id: getPostId(tweet),
-        post_url: tweet,
+        list_id: getListId(list),
+        list_url: list,
       }),
     }).then(() => {
       setLoading(false);
@@ -67,6 +90,7 @@ export default function Home() {
     const access_token = params.get("access_token");
     const access_token_secret = params.get("access_token_secret");
     const screen_name = params.get("screen_name");
+    console.log(list != "" ? getListInfo(list) : null);
     if (screen_name && access_token_secret && access_token) {
       const sess = {
         access_token,
@@ -89,30 +113,24 @@ export default function Home() {
         return (
           <div className="landing">
             <h1>
-              <span>MegaBlock</span> lets you{" "}
-              <span className="dangerzone">nuke</span> a tweet.
+              <span>Listless</span> lets you{" "}
+              <span className="dangerzone">nuke</span> a list.
             </h1>
             <p>
-              Don't like a bad tweet? Block the tweet, its author, and every
-              single person who liked it—in one click.
+              Trolls use lists to harass and supress. This site lets you block
+              all of the of the users that subscribe to a list.
             </p>
             <p>
-              A drop by the{" "}
+              Adapted from{" "}
               <a
-                href="https://genzmafia.com"
+                href="https://megablock.xyz"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Gen Z Mafia
+                MegaBlock
               </a>
               .
             </p>
-            <small>
-              <a href={"https://helloforefront.com"}>
-                The best way to deploy machine learning models
-              </a>
-            </small>
-            <TweetEmbed id="1288211237772226560" />
             <button className="get_started_button" onClick={() => setStep(1)}>
               Get Started
             </button>
@@ -164,22 +182,22 @@ export default function Home() {
       case 2:
         return (
           <div className="login_twitter landing">
-            <h1>Paste the Twitter post URL</h1>
+            <h1>Paste the Twitter list URL</h1>
             <p>
-              MegaBlock will block the author of the tweet, and anyone who liked
-              the tweet too. Be sure you want to do this.
+              MegaBlock will block the author of the list, and anyone who subscribes to
+              the list too. Be sure you want to do this.
             </p>
+            {name ? <p>List Name: {name}</p> : null}
             <input
               type="text"
-              value={tweet}
-              onChange={(e) => setTweet(e.target.value)}
+              value={list}
+              onChange={(e) => getListInfo(e.target.value)}
               className="twitter_input"
               placeholder="https://twitter.com/twitter/status/1234..."
             />
-            {tweet !== "" ? <TweetEmbed id={getPostId(tweet)} /> : null}
             <div className="progress_buttons custom_bottom_margin">
-              <button onClick={() => {setStep(1); setTweet("")}}>Go back</button>
-              {!session && tweet == '' ? (
+              <button onClick={() => {setStep(1); setList("")}}>Go back</button>
+              {!session && list == '' ? (
                 <button className="add_positivity disabled_button" disabled>
                   Next step
                 </button>
@@ -199,7 +217,7 @@ export default function Home() {
             <p>We 🅱️locked that user and everyone who liked the post!</p>
             <img className="gif" src="https://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif" alt="MegaBlock Nuke" />
             <div className="progress_buttons">
-              <button onClick={() => {setStep(0); setTweet("");}}>Back Home</button>
+              <button onClick={() => {setStep(0); setList("");}}>Back Home</button>
             </div>
           </div>
         );
@@ -209,7 +227,7 @@ export default function Home() {
   return (
     <div className="root">
       <Head>
-        <title>MegaBlock | Nuke tweets in one click</title>
+        <title>MegaBlock | Nuke lists in one click</title>
         <link
           rel="apple-touch-icon"
           sizes="180x180"
@@ -230,29 +248,29 @@ export default function Home() {
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta
           name="description"
-          content="Don't like a bad tweet? Block the tweet, its author, and every single person who liked it—in one click."
+          content="Don't like a bad list? Block the list, its author, and every single person who liked it—in one click."
         />
         <meta property="og:type" content="website" />
         <meta
           name="og:title"
           property="og:title"
-          content="MegaBlock | Nuke tweets in one click"
+          content="MegaBlock | Nuke lists in one click"
         />
         <meta
           name="og:description"
           property="og:description"
-          content="Don't like a bad tweet? Block the tweet, its author, and every single person who liked it—in one click."
+          content="Don't like a bad list? Block the list, its author, and every single person who liked it—in one click."
         />
         <meta property="og:site_name" content="MegaBlock.XYZ" />
         <meta property="og:url" content="https://megablock.xyz" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:title"
-          content="MegaBlock | Nuke tweets in one click"
+          content="MegaBlock | Nuke lists in one click"
         />
         <meta
           name="twitter:description"
-          content="Don't like a bad tweet? Block the tweet, its author, and every single person who liked it—in one click."
+          content="Don't like a bad list? Block the list, its author, and every single person who liked it—in one click."
         />
         <meta name="twitter:site" content="https://megablock.xyz" />
         <meta
@@ -283,10 +301,10 @@ export default function Home() {
       </Head>
       <Modal open={modal} onClose={closeModal} center>
         <div className="modal__header">
-          <h3>Are you sure you want to nuke this tweet?</h3>
+          <h3>Are you sure you want to nuke this list?</h3>
         </div>
         <div className="modal__content">
-          <p>You will block the author, all people that liked this tweet, and unfollow all of these individuals.</p>
+          <p>You will block the author, all people that subscribe to this list, and unfollow all of these individuals.</p>
           <input value={confirmation} onChange={e => setConfirmation(e.target.value)} placeholder="Type: I confirm I want to nuke" />
           <div>
             <button onClick={closeModal}>Cancel</button>
@@ -400,25 +418,25 @@ export default function Home() {
             line-height: 26.5px;
           }
           .landing > small{
-          
+
             color: rgb(99, 117, 131);
             font-weight: 500;
             font-size: 14px;
             max-width: 500px;
             line-height: 26.5px;
-          
+
           }
           .landing > small > a {
             color: inherit;
             text-decoration: none;
-            
+
             transition: 100ms ease-in-out;
           }
-          
+
           .landing > small > a:hover{
-            
+
             border-bottom: 1px solid rgb(99, 117, 131);
-            
+
             }
           .landing > p > a {
             color: rgb(22, 32, 44);

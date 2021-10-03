@@ -10,8 +10,8 @@
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "next": "9.5.0",
-    "next-auth": "^3.0.1",
-    "node-fetch": "^2.6.0",
+    "next-auth": "^3.29.0",
+    "node-fetch": "^2.6.5",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-responsive-modal": "^5.0.2",

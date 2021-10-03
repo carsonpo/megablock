@@ -1,6 +1,6 @@
 import Twitter from "twitter-lite";
 
-export default (res, res) =>
+export default (req, res) =>
   new Promise((resolve) => {
     const {
       body: { access_token, access_token_secret },

@@ -9,7 +9,7 @@ export default (req, res) =>
   new Promise((resolve) => {
     client
       .getRequestToken(
-        `${process.env.SITE || "http://localhost:3000"}/api/auth/twitter`
+        `${process.env.VERCEL_URL || "http://localhost:3000"}/api/auth/twitter`
       )
       .then((resp) => {
         resolve(res.status(200).json({ oauth_token: resp.oauth_token }));
