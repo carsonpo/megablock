@@ -2,8 +2,7 @@ const Welcome = ({ setStep }) => {
   return (
     <div className="landing">
       <h1>
-        <span>Listless</span> lets you{" "}
-        <span className="dangerzone">nuke</span> a list.
+        <span>Listless</span> lets you block harassing list.
       </h1>
       <p>
         Trolls use lists to harass and supress. This site lets you block

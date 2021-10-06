@@ -4,8 +4,7 @@ const Login = ({ handleLogin, session, setStep }) => {
         <h1>Login via Twitter</h1>
         <p>Get started by signing in with Twitter.</p>
         <p>
-          We won't use your account in any other way than to{" "}
-          <span className="cancel">nuke</span> the people you ask us to.
+          We won't use your account in any other way than to block the people you ask us to.
         </p>
         {!session ? (
           // Manual redirection

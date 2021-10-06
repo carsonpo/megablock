@@ -1,10 +1,10 @@
-const Paste = ({ getListInfo, setList, setStep }) => {
+const Paste = ({ getListInfo, list, openModal, name, session, setList, setStep }) => {
     return (
         <div className="login_twitter landing">
           <h1>Paste the Twitter list URL</h1>
           <p>
-            MegaBlock will block the author of the list, and anyone who subscribes to
-            the list too. Be sure you want to do this.
+            This will block the author of the list, and anyone who subscribes to
+            the list too. Be sure you want to do this and confirm it is the list displayed below.
           </p>
           {name ? <p>List Name: {name}</p> : null}
           <input
@@ -22,7 +22,7 @@ const Paste = ({ getListInfo, setList, setStep }) => {
               </button>
             ) : (
               <button onClick={openModal} className="megablock_button">
-                MegaBlock!
+                Block!
               </button>
             )}
           </div>
