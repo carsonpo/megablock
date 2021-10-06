@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import BeatLoader from "react-spinners/BeatLoader"; // Loading animation
 import { Modal } from 'react-responsive-modal';
 import cheerio from "cheerio";
+import Welcome from '../components/Welcome'
+import Login from '../components/Login'
+import Paste from '../components/Paste'
+import Success from '../components/Success'
 
 export default function Home() {
   const [step, setStep] = useState(0);
@@ -110,117 +114,13 @@ export default function Home() {
   function renderContent() {
     switch (step) {
       case 0:
-        return (
-          <div className="landing">
-            <h1>
-              <span>Listless</span> lets you{" "}
-              <span className="dangerzone">nuke</span> a list.
-            </h1>
-            <p>
-              Trolls use lists to harass and supress. This site lets you block
-              all of the of the users that subscribe to a list.
-            </p>
-            <p>
-              Adapted from{" "}
-              <a
-                href="https://megablock.xyz"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                MegaBlock
-              </a>
-              .
-            </p>
-            <button className="get_started_button" onClick={() => setStep(1)}>
-              Get Started
-            </button>
-          </div>
-        );
-
+        return <Welcome setStep={setStep} />
       case 1:
-        return (
-          <div className="login_twitter landing">
-            <h1>Login via Twitter</h1>
-            <p>Get started by signing in with Twitter.</p>
-            <p>
-              We won't use your account in any other way than to{" "}
-              <span className="cancel">nuke</span> the people you ask us to.
-            </p>
-            {!session ? (
-              // Manual redirection
-              <button onClick={handleLogin} className="twitter_signin">
-                <img src="/twitter-256.png" alt="Twitter logo" />
-                <span>Login with Twitter</span>
-              </button>
-            ) : (
-              <div className="profile">
-                <img
-                  src={`https://twivatar.glitch.me/@${session.screen_name}`}
-                  alt="Profile picture"
-                />
-                <div>
-                  <span>{session.screen_name}</span>
-                  <button onClick={handleSignOut}>Sign out</button>
-                </div>
-              </div>
-            )}
-            <div className="progress_buttons">
-              <button onClick={() => setStep(0)}>Go back</button>
-              {!session ? (
-                <button className="add_positivity disabled_button" disabled>
-                  Next step
-                </button>
-              ) : (
-                <button onClick={() => setStep(2)} className="add_positivity">
-                  Next step
-                </button>
-              )}
-            </div>
-          </div>
-        );
-
+        return <Login handleLogin={handleLogin} session={session} setStep={setStep} />
       case 2:
-        return (
-          <div className="login_twitter landing">
-            <h1>Paste the Twitter list URL</h1>
-            <p>
-              MegaBlock will block the author of the list, and anyone who subscribes to
-              the list too. Be sure you want to do this.
-            </p>
-            {name ? <p>List Name: {name}</p> : null}
-            <input
-              type="text"
-              value={list}
-              onChange={(e) => getListInfo(e.target.value)}
-              className="twitter_input"
-              placeholder="https://twitter.com/twitter/status/1234..."
-            />
-            <div className="progress_buttons custom_bottom_margin">
-              <button onClick={() => {setStep(1); setList("")}}>Go back</button>
-              {!session && list == '' ? (
-                <button className="add_positivity disabled_button" disabled>
-                  Next step
-                </button>
-              ) : (
-                <button onClick={openModal} className="megablock_button">
-                  MegaBlock!
-                </button>
-              )}
-            </div>
-          </div>
-        );
-
+        return <Paste getListInfo={getListInfo} setList={setList} setStep={setStep} />
       case 3:
-        return (
-          <div className="login_twitter landing">
-            <h1>MegaBlock Successful</h1>
-            <p>We 🅱️locked that user and everyone who liked the post!</p>
-            <img className="gif" src="https://i.pinimg.com/originals/47/12/89/471289cde2490c80f60d5e85bcdfb6da.gif" alt="MegaBlock Nuke" />
-            <div className="progress_buttons">
-              <button onClick={() => {setStep(0); setList("");}}>Back Home</button>
-            </div>
-          </div>
-        );
+        return <Success />
     }
   }
 
