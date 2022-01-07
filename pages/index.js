@@ -109,7 +109,7 @@ export default function Home() {
             </p>
             <small>
               <a href={"https://helloforefront.com"}>
-                The best way to deploy machine learning models
+                The best way to deploy GPT-J and GPT-NeoX
               </a>
             </small>
             <TweetEmbed id="1288211237772226560" />
