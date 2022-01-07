@@ -27,8 +27,8 @@ export default (req, res) =>
       `https://twitter.com/i/activity/favorited_popup?id=${post_id}`,
       {
         headers: {
-          "User-Agent":
-            "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+          "User-Agent": ""
+            //"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)", trying without this bc it got 429'd
         },
       }
     );
