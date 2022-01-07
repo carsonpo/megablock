@@ -1,6 +1,7 @@
 import Twitter from "twitter-lite";
 import cheerio from "cheerio";
-import nodeFetch from "node-fetch";
+// import nodeFetch from "node-fetch";
+import superagent from 'superagent'
 
 function onlyUnique(value, index, self) {
   return self.indexOf(value) === index;
@@ -23,16 +24,10 @@ export default (req, res) =>
       access_token_secret,
     });
 
-    const response = await nodeFetch(
+    const response = await superagent.get(
       `https://twitter.com/i/activity/favorited_popup?id=${post_id}`,
-      {
-        headers: {
-          "User-Agent": 'null' // https://github.com/node-fetch/node-fetch/pull/715/files
-            //"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)", trying without this bc it got 429'd
-        },
-      }
-    );
-    const text = await response.json();
+    )
+    const text = response.body;
 
     const $ = cheerio.load(text["htmlUsers"]);
     let screenNames = [];

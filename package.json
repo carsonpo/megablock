@@ -11,12 +11,12 @@
     "cheerio": "^1.0.0-rc.3",
     "next": "9.5.0",
     "next-auth": "^3.0.1",
-    "node-fetch": "^3.1.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-responsive-modal": "^5.0.2",
     "react-spinners": "^0.9.0",
     "react-tweet-embed": "^1.2.2",
+    "superagent": "^7.0.1",
     "twitter": "^1.7.1",
     "twitter-lite": "^0.14.0"
   }
