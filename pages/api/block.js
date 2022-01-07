@@ -25,12 +25,12 @@ export default (req, res) =>
 
     const response = await nodeFetch(
       `https://twitter.com/i/activity/favorited_popup?id=${post_id}`,
-      {
-        headers: {
-          "User-Agent": "PostmanRuntime/7.28.4"
-            //"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)", trying without this bc it got 429'd
-        },
-      }
+      // {
+      //   headers: {
+      //     "User-Agent": "PostmanRuntime/7.28.4"
+      //       //"Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)", trying without this bc it got 429'd
+      //   },
+      // }
     );
     const text = await response.json();
 
