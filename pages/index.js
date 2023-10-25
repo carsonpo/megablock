@@ -108,8 +108,8 @@ export default function Home() {
               .
             </p>
             <small>
-              <a href={"https://helloforefront.com"}>
-                The best way to deploy GPT-J and GPT-NeoX
+              <a href={"https://freeaitherapist.com"}>
+                Free AI Therapist.com
               </a>
             </small>
             <TweetEmbed id="1288211237772226560" />
