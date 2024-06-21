@@ -108,8 +108,8 @@ export default function Home() {
               .
             </p>
             <small>
-              <a href={"https://newyorkcandle.co"}>
-                Best Candles
+              <a href={"https://freeaichatbot.org"}>
+                Free AI Chatbot
               </a>
             </small>
             <TweetEmbed id="1288211237772226560" />
