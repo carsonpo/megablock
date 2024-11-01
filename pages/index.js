@@ -108,8 +108,8 @@ export default function Home() {
               .
             </p>
             <small>
-              <a href={"https://filefolder.org"}>
-                AI Powered File Storage and Manager
+              <a href={"https://simpleaisoftware.com"}>
+                Simple AI Software
               </a>
             </small>
             <TweetEmbed id="1288211237772226560" />
